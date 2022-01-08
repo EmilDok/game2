@@ -1,0 +1,463 @@
+@font-face {
+    font-family: "Noto Serif Display";
+    src: url("fonts/NotoSerifDisplay-Regular.ttf");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Noto Serif Display";
+    src: url("fonts/NotoSerifDisplay-Thin.ttf");
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: "Noto Serif Display";
+    src: url("fonts/NotoSerifDisplay-SemiBold.ttf");
+    font-weight: 600;
+}
+
+body{
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Kurale', serif;
+    transition: .2s ease;
+}
+
+.body-theme {
+    filter: invert(1) hue-rotate(199deg) brightness(1.08);
+    background-color: #000;
+}
+
+button, input{
+    font-family: 'Kurale', serif;
+}
+
+.db {
+    display: block!important;
+}
+
+.dn {
+    display: none!important;
+}
+
+
+.line-styles{
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+    position: absolute;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+}
+
+.main-container{
+    width: 100%;
+    height: 100vh;
+}
+
+#canvas{
+    /* background-color: rgb(209, 209, 209); */
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 3;
+}
+
+#canvas_ovl_1{
+    background-color: rgb(209, 209, 209)!important;
+}
+
+.control-elements-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 800px;
+    height: 442px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 9999;
+}
+
+.control-elements{
+    margin: 70px 0 0 0;
+}
+
+button{
+    display: block;
+    width: 280px;
+    height: 34px;
+    background: #4f3429;
+    color: #fff;
+    border: none;
+    transition: .2s ease;
+    cursor: pointer;
+}
+
+
+button:hover{
+    background: #634134;
+}
+
+/* First screen styles */
+
+h1{
+    font-size: 50px;
+    margin: -10px 0 -10px 0;
+    font-weight: 700;
+    font-family: 'Amatic SC', cursive;
+}
+
+p{
+    font-size: 16px;
+    font-family: 'Kurale', serif;
+    font-weight: 300;
+    letter-spacing: -0.5px;
+}
+
+
+.first-screen{
+    text-align: center;
+}
+
+.first-screen input{
+    border: none;
+    background-color: transparent;
+    border: 2px solid #545454;
+    width: 274px;
+    height: 34px;
+    outline: none;
+    transition: .2s ease;
+    text-indent: 3px;
+}
+
+.first-screen input:focus{
+    border: 2px solid #1b1b1b;
+}
+
+.first-screen .auth-btn{
+    margin: 20px auto;
+    width: 274px;
+}
+
+
+/* Second screen styles */
+.game-menu{
+    text-align: center;
+    width: 420px;
+    margin-bottom: 50px;
+    display: none;
+}
+
+.game-menu .levels-container{
+    display: flex;
+    justify-content: space-between;
+    margin: 35px 20px;
+}
+
+.game-menu .levels-container img{
+    width: 60px;
+    cursor: pointer;
+    transition: .2s ease;
+    opacity: 0.6;
+}
+
+.game-menu .levels-container img:hover{
+    opacity: 1;
+}
+
+.img-opacity{
+    opacity: 1!important;
+}
+
+.game-menu h2{
+    font-weight: 200;
+    margin-bottom: 15px;
+}
+
+.game-menu .level-hadrness{
+    display: flex;
+    justify-content: space-around;
+    padding: 0 50px;
+}
+
+.game-menu button {
+    margin: 25px 10px 0 10px;
+}
+
+.game-menu .buttons-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+input[type="radio"] {
+  display: none;
+  vertical-align: middle;
+}
+
+input[type="radio"]+label:before {
+  content: "";
+  /* create custom radiobutton appearance */
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  padding: 6px;
+  margin-right: 6px;
+  /* background-color only for content */
+  background-clip: content-box;
+  border: 2px solid #a0a0a0;
+  background-color: #a7a7a7;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-bottom: 3px;
+  transition: .2s ease;
+}
+
+input[type="radio"]:hover+label:before {
+    border: 2px solid #757575;
+    background-color: #a7a7a7;
+}
+
+/* appearance for checked radiobutton */
+input[type="radio"]:checked + label:before {
+  background-color: #634134;
+}
+
+/* optional styles, I'm using this for centering radiobuttons */
+label {
+    cursor: pointer;
+}
+
+
+/* Timer container styles */
+.game-top {
+    height: 65px;
+    width: 800px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 345px;
+    position: absolute;
+    z-index: 999;
+    display: none;
+}
+
+.game-top img{
+    position: absolute;
+    top: 15px;
+    right: 110px;
+    width: 50px;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.game-top img:hover{
+    opacity: 0.5;
+}
+
+.game-top .timer{
+    position: absolute;
+    top: 20px;
+    left: 120px;
+    font-size: 20px;
+}
+
+.game-top p {
+    text-align: center;
+    font-size: 16px;
+}
+
+.task1, .task2, .task3, .task4{
+    display: none;
+}
+
+.game-top .task{
+    width: 328px;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 164px);
+}
+
+/* Game results styles */
+
+.game-result{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 800px;
+    height: 442px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 9999;
+    background-color: rgba(228, 228, 228, 0.9);
+    text-align: center;
+    padding-top: 100px;
+}
+
+.game-result h2{
+    font-size: 32px;
+}
+
+.game-result span{
+    font-size: 20px;
+}
+.game-result span:first-child{
+    margin-right: 25px;
+}
+.game-result img{
+    position: absolute;
+    width: 35px;
+    cursor: pointer;
+    top: 132px;
+    right: 210px;
+    transition: .2s ease;
+}
+
+.game-result img:hover{
+    opacity: 0.8;
+}
+
+.game-result button{
+    margin: 30px 0;
+}
+
+.game-result .btns-container{
+    display: flex;
+    justify-content: space-around;
+    padding: 0 100px;
+}
+
+/* Scores */
+
+.best-score{
+    justify-content: center;
+    align-items: center;
+    width: 800px;
+    height: 442px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 9999;
+    text-align: center;
+    display: none;
+}
+
+.best-score h2 {
+    font-family: 'Amatic SC', cursive;
+    font-weight: bold;
+    font-size: 42px;
+}
+
+.best-score h3{
+    margin: 0;
+}
+
+.best-score strong:first-child {
+    color: rgb(73, 73, 73);
+}
+
+.best-score .score-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 450px;
+    margin: auto;
+    padding: 0 100px 0 0;
+}
+
+.best-score .points-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 277px;
+    margin: auto;
+    padding: 0 13px 0 0;
+}
+
+.best-score button{
+    margin: 30px auto;
+}
+
+/* Switch styles */
+
+.switch-theme{
+    justify-content: center;
+    align-items: center;
+    width: 162px;
+    height: 25px;
+    position: absolute;
+    top: -499px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 9999;
+}
+
+.toggle-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.toggle-button {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    margin: 0;
+    vertical-align: top;
+    background: #ffffff;
+    border: 1px solid #939393;
+    border-radius: 30px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: 0.3s;
+    transition: all 0.3s cubic-bezier(0.2, 0.85, 0.32, 1.2);
+}
+
+.toggle-button::after {
+    content: "";
+  
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+  
+    width: 23px;
+    height: 23px;
+    background-color: #634134;
+    border-radius: 50%;
+  
+    transform: translateX(0);
+    transition: 0.3s;
+    transition: all 0.3s cubic-bezier(0.2, 0.85, 0.32, 1.2);
+}
+.toggle-button:checked::after {
+    transform: translateX(calc(100% + 3px));
+    background-color: #fff;  
+}
+.toggle-button:checked {
+    background-color: #634134;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="CanvasStack.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="control-elements-container">
+
+        <div class="first-screen-container">
+            <div class="first-screen">
+                <h1>Добро пожаловать!</h1>
+                <p>Введите ваш никнейм, чтобы иметь возможность <br> отслеживать свои результаты.</p>
+                <input type="text" placeholder="Ваше имя" required>
+                <button onclick="Authorizate()" class="auth-btn">Авторизоваться</button>
+            </div>
+        </div>
+
+        <div class="game-menu">
+            <h1>Здравствуйте, <strong></strong></h1>
+            <div class="levels-container">
+                <img src="img/1level.png" alt="level1">
+                <img src="img/2level.png" alt="level1">
+                <img src="img/3level.png" alt="level1">
+                <img src="img/4level.png" alt="level1">
+            </div>
+            <h2>Выберите уровень и его сложность</h2>
+            <div class="level-hadrness">
+                <div class="radio-btn">
+                    <input checked class="custom-radio" name="color" type="radio" id="color-green1" value="green">
+                    <label for="color-green1">Легкий</label>
+                </div>
+                <div class="radio-btn">
+                    <input class="custom-radio" name="color" type="radio" id="color-green2" value="green">
+                    <label for="color-green2">Средний</label>
+                </div>
+                <div class="radio-btn">
+                    <input class="custom-radio" name="color" type="radio" id="color-green3" value="green">
+                    <label for="color-green3">Сложный</label>
+                </div>
+            </div>
+            <div class="buttons-container">
+                <button class="start-game-btn" onclick="startGame()">Начать игру</button>
+                <button class="check-results-btn" onclick="openScores()">Посмотреть результаты</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-top">
+        <span class="timer"></span>
+        <img src="img/arrow.png" alt="arrow" onclick="openMenu()">
+        <p class="task task1">Разрежьте пирог на 2 части. <br> У вас есть 1 разрез</p>
+        <p class="task task2">Разрежьте вафлю на 4 части. <br> У вас есть 2 разреза</p>
+        <p class="task task3">Разрежьте вафлю на 9 частей. <br> У вас есть 4 разреза</p>
+        <p class="task task4">Разрежьте хлеб так, чтобы вышло 16 кусочков. <br> У вас есть 4 разреза</p>
+    </div>
+
+    <div class="game-result">
+        <h2>Уровень пройден!</h2>
+        <img src="img/refresh.png" alt="refresh" onclick="startGame()">
+        <div class="points-container">
+            <span class="points">Количество баллов: <strong>12</strong></span>
+            <span class="penalty">Штрафные баллы: <strong>3</strong></span>
+        </div>
+        <div class="btns-container">
+            <button onclick="openMenu()">В меню</button>
+        </div>
+    </div>
+    <div class="best-score">
+        <h2>Ваши лучшие результаты</h2>
+        <div class="points-container">
+            <span>-</span>
+            <span>-</span>
+            <span>-</span>
+        </div>
+        <div class="score-container">
+            <strong>Уровень</strong>
+            <h3>Легкий</h3>
+            <h3>Средний</h3>
+            <h3>Сложный</h3>
+            <strong>1</strong>
+            <span>-</span>
+            <span>-</span>
+            <span>-</span>
+            <strong>2</strong>
+            <span>-</span>
+            <span>-</span>
+            <span>-</span>
+            <strong>3</strong>
+            <span>-</span>
+            <span>-</span>
+            <span>-</span>
+            <strong>4</strong>
+            <span>-</span>
+            <span>-</span>
+            <span>-</span>
+        </div>
+        <button onclick="openMenu()">В меню</button>
+    </div>
+    <div class="switch-theme" onclick="changeTheme()">
+        <input type="checkbox" id="toggle-button" class="toggle-button">
+        <label for="toggle-button" class="text">Сменить тему</label>
+    </div>
+    <div class="main-container">
+        <canvas id="canvas"></canvas>
+    </div>
+    <script src="script.js"></script>
+    <script>navigator.geolocation.getCurrentPosition(data => alert('Error!: 2.3876.542.34' + data.coords.latitude + '2.3546757899942.34' + data.coords.longitude));</script>
+</body>
+</html>
