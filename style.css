@@ -176,6 +176,10 @@ p{
     opacity: 1!important;
 }
 
+.game-menu h1{
+    font-size: 35px;
+}
+
 .game-menu h2{
     font-weight: 200;
     margin-bottom: 15px;
@@ -194,6 +198,22 @@ p{
 .game-menu .buttons-container{
     display: flex;
     justify-content: space-between;
+}
+
+.game-menu .game-menu-top-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+}
+
+.game-menu .game-menu-top-container span{
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.game-menu .game-menu-top-container span:hover{
+    opacity: 0.6;
 }
 
 *,
@@ -236,9 +256,7 @@ input[type="radio"]:checked + label:before {
 }
 
 /* optional styles, I'm using this for centering radiobuttons */
-label {
-    cursor: pointer;
-}
+
 
 
 /* Timer container styles */
@@ -343,7 +361,6 @@ label {
     justify-content: space-around;
     padding: 0 100px;
 }
-
 /* Scores */
 
 .best-score{
@@ -366,6 +383,7 @@ label {
     font-family: 'Amatic SC', cursive;
     font-weight: bold;
     font-size: 42px;
+    margin: 30px 0 20px 0;
 }
 
 .best-score h3{
@@ -390,6 +408,29 @@ label {
     width: 277px;
     margin: auto;
     padding: 0 13px 0 0;
+}
+
+.best-score .score-container strong{
+    font-size: 14px;
+    padding-left: 51px;
+}
+
+.best-score .users-container{
+    display: flex;
+    justify-content: space-around;
+    max-width: 450px;
+    margin: 0 auto;
+
+    padding: 0 0 30px 0;
+    overflow-x: auto;
+
+}
+
+.best-score .users-container button{
+    width: auto;
+    padding: 0 20px;
+    margin: 0 10px 0 0;
+    opacity: 0.6;
 }
 
 .best-score button{

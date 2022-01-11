@@ -5,7 +5,6 @@ function handleMouseMove(event) {
     }
     return Point;
 }
-
 //variables
 const canvas = document.getElementById('canvas');
 canvas.width = 800;
@@ -72,6 +71,17 @@ let decor1 = new Image();
 decor1.src = 'img/bg_decor.png';
 decor1.onload = () => layer3_ctx.drawImage(decor1, 0, 0, 800, 442);
 
+let usersList = 0;
+let curuser = 0;
+
+if (localStorage.getItem('curuser')) {
+    curuser = localStorage.getItem('curuser')
+}
+
+if (localStorage.getItem('username')) {
+    usersList = localStorage.getItem('username').split(']')
+}
+
 if (localStorage.getItem('username')) {
     let helloContainer = document.querySelector('.first-screen-container');
     let gameMenu = document.querySelector('.game-menu');
@@ -85,6 +95,11 @@ if (localStorage.getItem('theme') == '1') {
     document.querySelector("body").classList.add("body-theme")
 }
 
+function getRandomNumber(max) {
+    max++;
+    return Math.floor(Math.random() * (max)) ; //Максимум не включается, минимум включается
+}
+
 function changeTheme() {
     if (document.querySelector("body").classList.contains("body-theme")) {
         document.querySelector("body").classList.remove("body-theme");
@@ -95,13 +110,32 @@ function changeTheme() {
     }
 }
 
+function changeUser() {
+    let helloContainer = document.querySelector('.first-screen-container');
+    let gameMenuContainer = document.querySelector('.game-menu');
+
+    helloContainer.classList.remove("dn")
+    gameMenuContainer.classList.remove("db")
+}
+
 function Authorizate() {
     let inputName = document.querySelector('.first-screen input');
     let gameMenuContainer = document.querySelector('.game-menu');
 
+    gameMenuContainer.classList.add("db");
 
-    gameMenuContainer.classList.add("db")
-    localStorage.setItem('username', inputName.value);
+    localStorage.setItem('curuser', inputName.value)
+
+    curuser = localStorage.getItem('curuser')
+    if (usersList == 0) {
+        localStorage.setItem('username', inputName.value);
+    } else {
+        if (!usersList.includes(inputName.value)) {
+            localStorage.setItem('username', localStorage.getItem('username') + ']' + inputName.value);
+        }
+    }
+    
+    usersList = localStorage.getItem('username').split(']')
 
     let helloContainer = document.querySelector('.first-screen-container');
     
@@ -114,6 +148,7 @@ function openScores() {
     let menuContainer = document.querySelector('.control-elements-container');
     let scoreLevels = document.querySelectorAll('.best-score .score-container span');
     let scorePoints = document.querySelectorAll('.best-score .points-container span');
+    let usersContainer = document.querySelector('.best-score .users-container');
 
     let firstBest = 0;
     let secondBest = 0;
@@ -122,25 +157,39 @@ function openScores() {
     menuContainer.style.display = "none";
     scores.classList.add("db");
 
+    usersContainer.innerHTML = "";
+
+    if (usersList != 0) {
+        usersList.forEach(element => {
+
+            if (element == curuser) 
+                usersContainer.innerHTML += `<button onclick="showScoresForUser(event)" class="img-opacity">${element}</button>`
+            else
+                usersContainer.innerHTML += `<button onclick="showScoresForUser(event)">${element}</button>`
+            
+        });
+    }
+
+
     for (let i = 1; i <= 4; i++) {
-        if (localStorage.getItem(`${i} 0`) != null && firstBest < parseInt(localStorage.getItem(`${i} 0`))){
-            firstBest = localStorage.getItem(`${i} 0`)
+        if (localStorage.getItem(`${curuser}${i} 0`) != null && firstBest < parseInt(localStorage.getItem(`${curuser}${i} 0`))){
+            firstBest = localStorage.getItem(`${curuser}${i} 0`)
         }
     }
 
     scorePoints[0].innerHTML = firstBest;
 
     for (let i = 1; i <= 4; i++) {
-        if (localStorage.getItem(`${i} 1`) != null && secondBest < parseInt(localStorage.getItem(`${i} 1`))){
-            secondBest = localStorage.getItem(`${i} 1`)
+        if (localStorage.getItem(`${curuser}${i} 1`) != null && secondBest < parseInt(localStorage.getItem(`${curuser}${i} 1`))){
+            secondBest = localStorage.getItem(`${curuser}${i} 1`)
         }
     }
     
     scorePoints[1].innerHTML = secondBest;
 
     for (let i = 1; i <= 4; i++) {
-        if (localStorage.getItem(`${i} 2`) != null && thirdBest < parseInt(localStorage.getItem(`${i} 2`))){
-            thirdBest = localStorage.getItem(`${i} 2`)
+        if (localStorage.getItem(`${curuser}${i} 2`) != null && thirdBest < parseInt(localStorage.getItem(`${curuser}${i} 2`))){
+            thirdBest = localStorage.getItem(`${curuser}${i} 2`)
         }
     }
     
@@ -150,45 +199,124 @@ function openScores() {
     ///////////////////
 
     for (let i = 0; i < 3; i++) {
-        if (localStorage.getItem(`1 ${i}`) == null)
+        if (localStorage.getItem(`${curuser}1 ${i}`) == null)
             scoreLevels[i].innerHTML = "-"
         else
             scoreLevels[i].innerHTML = "+";
 
-        console.log(localStorage.getItem(`1 ${i}`), i)
     }
 
     for (let i = 3; i < 6; i++) {
 
-        if (localStorage.getItem(`2 ${i-3}`) == null)
+        if (localStorage.getItem(`${curuser}2 ${i-3}`) == null)
             scoreLevels[i].innerHTML = "-"
         else
             scoreLevels[i].innerHTML = "+";
 
-        console.log(localStorage.getItem(`2 ${i}`), i)
     }
 
     for (let i = 6; i < 9; i++) {
 
-        if (localStorage.getItem(`3 ${i-6}`) == null)
+        if (localStorage.getItem(`${curuser}3 ${i-6}`) == null)
             scoreLevels[i].innerHTML = "-"
         else
             scoreLevels[i].innerHTML = "+";
 
-        console.log(localStorage.getItem(`3 ${i}`), i)
     }
 
     for (let i = 9; i < 12; i++) {
 
-        if (localStorage.getItem(`4 ${i-9}`) == null)
+        if (localStorage.getItem(`${curuser}4 ${i-9}`) == null)
             scoreLevels[i].innerHTML = "-"
         else
             scoreLevels[i].innerHTML = "+";
 
-        console.log(localStorage.getItem(`4 ${i}`), i)
     }
 
 
+}
+
+function showScoresForUser(event) {
+    let firstBest = 0;
+    let secondBest = 0;
+    let thirdBest = 0;
+    let scorePoints = document.querySelectorAll('.best-score .points-container span');
+    let buttons = document.querySelectorAll('.best-score .users-container button');
+    let scoreLevels = document.querySelectorAll('.best-score .score-container span');
+
+    buttons.forEach(element => {
+        element.classList.remove("img-opacity");
+    });
+
+    event.target.classList.add("img-opacity")
+
+    let curus = event.target.innerText;
+
+    if (usersList != 0) {
+        for (let i = 1; i <= 4; i++) {
+            if (localStorage.getItem(`${curus}${i} 0`) != null && firstBest < parseInt(localStorage.getItem(`${curus}${i} 0`))){
+                firstBest = localStorage.getItem(`${curus}${i} 0`)
+            }
+        }
+    
+        scorePoints[0].innerHTML = firstBest;
+    
+        for (let i = 1; i <= 4; i++) {
+            if (localStorage.getItem(`${curus}${i} 1`) != null && secondBest < parseInt(localStorage.getItem(`${curus}${i} 1`))){
+                secondBest = localStorage.getItem(`${curus}${i} 1`)
+            }
+        }
+        
+        scorePoints[1].innerHTML = secondBest;
+    
+        for (let i = 1; i <= 4; i++) {
+            if (localStorage.getItem(`${curus}${i} 2`) != null && thirdBest < parseInt(localStorage.getItem(`${curus}${i} 2`))){
+                thirdBest = localStorage.getItem(`${curus}${i} 2`)
+            }
+        }
+        
+        scorePoints[2].innerHTML = thirdBest;
+        
+    
+        ///////////////////
+    
+        for (let i = 0; i < 3; i++) {
+            if (localStorage.getItem(`${curus}1 ${i}`) == null)
+                scoreLevels[i].innerHTML = "-"
+            else
+                scoreLevels[i].innerHTML = "+";
+    
+        }
+    
+        for (let i = 3; i < 6; i++) {
+    
+            if (localStorage.getItem(`${curus}2 ${i-3}`) == null)
+                scoreLevels[i].innerHTML = "-"
+            else
+                scoreLevels[i].innerHTML = "+";
+    
+        }
+    
+        for (let i = 6; i < 9; i++) {
+    
+            if (localStorage.getItem(`${curus}3 ${i-6}`) == null)
+                scoreLevels[i].innerHTML = "-"
+            else
+                scoreLevels[i].innerHTML = "+";
+    
+        }
+    
+        for (let i = 9; i < 12; i++) {
+    
+            if (localStorage.getItem(`${curus}4 ${i-9}`) == null)
+                scoreLevels[i].innerHTML = "-"
+            else
+                scoreLevels[i].innerHTML = "+";
+    
+        }    
+    }
+
+   
 }
 
 function openMenu() {
@@ -199,14 +327,20 @@ function openMenu() {
     let gameResult = document.querySelector('.game-result');
     let scores = document.querySelector('.best-score');
 
+    usersList = localStorage.getItem('username').split(']')
+
+
     clearInterval(time);
     scores.classList.remove("db");
     gameResult.classList.remove("db");
     topContainer.classList.add("dn");
     mainContainer.style.display = "flex";
 
-    helloName.innerHTML = localStorage.getItem('username');
+    helloName.innerHTML = curuser;
 
+    curLineNumber = 0;
+    linesPointsArr = [];
+    normalCoords = [];
     layer1_ctx.clearRect(0, 0, canvas.width, canvas.height);
     layer2_ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -383,7 +517,7 @@ function levelSucceeded() {
         break;
     }
 
-    localStorage.setItem(`${levelnum} ${levelHardness}`, points[levelHardness])
+    localStorage.setItem(`${curuser}${levelnum} ${levelHardness}`, points[levelHardness])
     
 
     // switch (levelnum) {
@@ -620,8 +754,10 @@ function followMouse(linesNumber) {
 
 function drawCircle() {
 
+    let imgSouces = ['img/lay2.png', 'img/lay2_1.png', 'img/lay2_2.png'];
+
     let base_image = new Image();
-    base_image.src = 'img/lay2.png';
+    base_image.src = imgSouces[getRandomNumber(2)];
     base_image.onload = () => layer1_ctx.drawImage(base_image, 400 - 100, 221 - 100, 200, 200);
 
 }
@@ -662,8 +798,10 @@ function checkCollision(){
 //Second level functions
 
 function drawRect() {
+    let imgSouces = ['img/lay3.png', 'img/lay3_1.png', 'img/lay4.png'];
+
     let base_image = new Image();
-    base_image.src = 'img/lay3.png';
+    base_image.src = imgSouces[getRandomNumber(2)];
     base_image.onload = () => layer1_ctx.drawImage(base_image, 400 - 77, 221 - 77, 154, 154);
 
 }
@@ -740,10 +878,10 @@ function drawRect2() {
     // layer1_ctx.lineTo(400, 221-t1);
     // layer1_ctx.closePath();
     // layer1_ctx.stroke();
-
+    let imgSouces = ['img/lay3_45.png', 'img/lay3_47.png', 'img/lay3_46.png'];
 
     let base_image = new Image();
-    base_image.src = 'img/lay3_45.png';
+    base_image.src = imgSouces[getRandomNumber(2)];
     base_image.onload = () => layer1_ctx.drawImage(base_image, 400 - 93, 221 - 96, 188, 188);
 }
 
@@ -831,6 +969,7 @@ function drawRect3() {
     let indent = 70;
     let squareSize = 80;
 
+    let imgSouces = ['img/lay3.png', 'img/lay4.png', 'img/lay2.png'];
     // layer1_ctx.beginPath();
     // layer1_ctx.rect(400 - indent - squareSize/2, 221 - indent - squareSize/2, squareSize, squareSize);
     // layer1_ctx.stroke();
@@ -848,19 +987,19 @@ function drawRect3() {
     // layer1_ctx.stroke();
 
     let base_image = new Image();
-    base_image.src = 'img/lay4.png';
+    base_image.src = imgSouces[getRandomNumber(2)];
     base_image.onload = () => layer1_ctx.drawImage(base_image, 400 - indent - squareSize/2 - 2, 221 - indent - squareSize/2 - 2, squareSize + 4, squareSize + 4);
 
     let base_image2 = new Image();
-    base_image2.src = 'img/lay4.png';
+    base_image2.src = imgSouces[getRandomNumber(2)];
     base_image2.onload = () => layer1_ctx.drawImage(base_image2, 400 - indent - squareSize/2 - 2, 221 + indent - squareSize/2 - 2, squareSize + 4, squareSize + 4);
 
     let base_image3 = new Image();
-    base_image3.src = 'img/lay4.png';
+    base_image3.src = imgSouces[getRandomNumber(2)];
     base_image3.onload = () => layer1_ctx.drawImage(base_image3, 400 + indent - squareSize/2 - 2, 221 + indent - squareSize/2 - 2, squareSize + 4, squareSize + 4);
 
     let base_image4 = new Image();
-    base_image4.src = 'img/lay4.png';
+    base_image4.src = imgSouces[getRandomNumber(2)];
     base_image4.onload = () => layer1_ctx.drawImage(base_image4, 400 + indent - squareSize/2 - 2, 221 - indent - squareSize/2 - 2, squareSize + 4, squareSize + 4);
 }   
 

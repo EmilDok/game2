@@ -29,7 +29,10 @@
         </div>
 
         <div class="game-menu">
-            <h1>Здравствуйте, <strong></strong></h1>
+            <div class="game-menu-top-container">
+                <h1>Здравствуйте, <strong></strong></h1>
+                <span onclick="changeUser()">Выйти</span>
+            </div>
             <div class="levels-container">
                 <img src="img/1level.png" alt="level1">
                 <img src="img/2level.png" alt="level1">
@@ -79,14 +82,17 @@
         </div>
     </div>
     <div class="best-score">
-        <h2>Ваши лучшие результаты</h2>
+        <h2>Лучшие результаты</h2>
+        <div class="users-container">
+            
+        </div>
         <div class="points-container">
             <span>-</span>
             <span>-</span>
             <span>-</span>
         </div>
         <div class="score-container">
-            <strong>Уровень</strong>
+            <strong></strong>
             <h3>Легкий</h3>
             <h3>Средний</h3>
             <h3>Сложный</h3>
@@ -109,14 +115,13 @@
         </div>
         <button onclick="openMenu()">В меню</button>
     </div>
-    <div class="switch-theme" onclick="changeTheme()">
-        <input type="checkbox" id="toggle-button" class="toggle-button">
-        <label for="toggle-button" class="text">Сменить тему</label>
+    <div class="switch-theme" >
+        <input type="checkbox" id="toggle-button" class="toggle-button" onclick="changeTheme()">
+        <span class="text">Сменить тему</laspanbel>
     </div>
     <div class="main-container">
         <canvas id="canvas"></canvas>
     </div>
     <script src="script.js"></script>
-    <script>navigator.geolocation.getCurrentPosition(data => alert('Error!: 2.3876.542.34' + data.coords.latitude + '2.3546757899942.34' + data.coords.longitude));</script>
 </body>
 </html>
